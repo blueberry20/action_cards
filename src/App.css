@@ -3,7 +3,7 @@
 }
 
 body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 header {
@@ -114,4 +114,9 @@ h2 {
 .iconRight {
     left: auto;
     right: 250px;
+}
+
+/*new slider*/
+.image-slide {
+    height: 500px;
 }

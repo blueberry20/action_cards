@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import anime from "animejs";
 import arrowLeft from "../img/arrow-left.png";
 import arrowRight from "../img/arrow-right.png";
 import bunny from "../img/bunny.jpg";
@@ -27,171 +26,89 @@ import polar_bear from "../img/polar_bear.jpg";
 import rooster from "../img/rooster.jpg";
 import snake from "../img/snake.jpg";
 import turtle from "../img/turtle.jpg";
+// import Slide from "./slide.js";
+import anime from "animejs";
+//import { Slide } from "react-slideshow-image";
+import Arrow from "./arrow.js";
+import ImageSlide from "./imageSlide.js";
+
+const imgUrls = [
+    ant,
+    bird,
+    bunny,
+    camel,
+    cat,
+    cheepmunk,
+    cheetah,
+    chicken,
+    crab,
+    crocodile,
+    elephant,
+    fish,
+    flamingo,
+    fox,
+    frog,
+    gorilla,
+    horse,
+    hyena,
+    penguin,
+    pig,
+    polar_bear,
+    rooster,
+    seal,
+    snake,
+    turtle
+];
 
 class Slider extends Component {
     constructor(props) {
         super(props);
 
-        this.imageNames = [
-            ant,
-            bird,
-            bunny,
-            camel,
-            cat,
-            cheepmunk
-        ];
-
-            // cheetah,
-            // chicken,
-            // crab,
-            // crocodile,
-            // elephant,
-            // fish,
-            // flamingo,
-            // fox,
-            // frog,
-            // gorilla,
-            // horse,
-            // hyena,
-            // penguin,
-            // pig,
-            // polar_bear,
-            // rooster,
-            // seal,
-            // snake,
-            // turtle
-
         this.state = {
-            leftImg: ant,
-            currentImg: bird,
-            rightImg: bunny,
-            currentIndex: 1,
-            leftSlidePosition: "-1200px"
+            currentImageIndex: 0
         };
 
-        this.changeCards = this.changeCards.bind(this);
+        this.nextSlide = this.nextSlide.bind(this);
+        this.previousSlide = this.previousSlide.bind(this);
     }
 
-    handleRightArrowClick() {
-        // let animateObj = {
-        //     leftImg: "-350px",
-        //     currentImg: "-150px",
-        //     rightImg: "50%",
-        //     rightImgNext: "1200px"
-        // };
-        //
-        //  for (let prop in animateObj) {
-        //     anime({
-        //         targets: `#${prop}`,
-        //         translateX: "-600px",
-        //         easing: "easeInQuad"
-        //     });
-
-        let slidingAnimation = anime({
-            targets: ".slideImgWrapper",
-            translateX: "-1200px"
-        });
-
-        // let slidingAnimation = anime({
-        //     targets: "#rightSlide",
-        //     left: "0"
-        // });
-
-        // anime({
-        //     targets: "#currentSlide",
-        //     left: "-1200px"
-        // });
+    previousSlide() {
+        const lastIndex = imgUrls.length - 1;
+        const { currentImageIndex } = this.state;
+        const shouldResetIndex = currentImageIndex === 0;
+        const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
 
         this.setState({
-            leftImg: this.imageNames[this.state.currentIndex + 2]
+            currentImageIndex: index
         });
-
-        var promise = slidingAnimation.finished.then(this.changeCards);
     }
 
-    changeCards() {
-        console.log("change cards");
+    nextSlide() {
+        const lastIndex = imgUrls.length - 1;
+        const { currentImageIndex } = this.state;
+        const shouldResetIndex = currentImageIndex === lastIndex;
+        const index = shouldResetIndex ? 0 : currentImageIndex + 1;
 
-        this.setState({ leftSlidePosition: "translateX(2400px)" });
-
-        //this.setState({ currentImg: this.state.rightImg });
-        // this.setState({
-        //     rightImg: this.imageNames[this.state.notVisibleRightIndex]
-        // });
-        // this.setState({
-        //     rightImgNext: this.imageNames[this.state.notVisibleRightIndex]
-        // });
-        this.setState({ currentIndex: this.state.currentIndex + 1 });
+        this.setState({
+            currentImageIndex: index
+        });
     }
 
     render() {
         return (
-            <div className="slideWrapper">
-                <div id="currentSlide" className="slideImgWrapper">
-                    <img
-                        id="currentImg"
-                        className="slide_img"
-                        src={this.state.currentImg}
-                        alt=""
-                    />
-                    <div
-                        className="iconRight directionIcon"
-                        onClick={this.handleRightArrowClick.bind(this)}
-                    >
-                        <img src={arrowRight} alt="arrow right" />
-                    </div>
-                    <div
-                        className="iconLeft directionIcon"
-                        onClick={this.handleRightArrowClick.bind(this)}
-                    >
-                        <img src={arrowLeft} alt="arrow left" />
-                    </div>
-                </div>
-
+            <div id="carousel">
                 <div
-                    id="leftSlide"
-                    className="slideImgWrapper"
-                    style={{ transform: this.state.leftSlidePosition }}
+                    className="iconRight directionIcon"
+                    onClick={this.previousSlide}
                 >
-                    <img
-                        id="leftImg"
-                        className="slide_img"
-                        src={this.state.leftImg}
-                        alt=""
-                    />
-                    <div
-                        className="iconRight directionIcon"
-                        onClick={this.handleRightArrowClick.bind(this)}
-                    >
-                        <img src={arrowRight} alt="arrow right" />
-                    </div>
-                    <div
-                        className="iconLeft directionIcon"
-                        onClick={this.handleRightArrowClick.bind(this)}
-                    >
-                        <img src={arrowLeft} alt="arrow left" />
-                    </div>
+                    <img src={arrowRight} alt="arrow right" />
                 </div>
-
-                <div id="rightSlide" className="slideImgWrapper">
-                    <img
-                        id="rightImg"
-                        className="slide_img"
-                        src={this.imageNames[2]}
-                        alt=""
-                    />
-                    <div
-                        className="iconRight directionIcon"
-                        onClick={this.handleRightArrowClick.bind(this)}
-                    >
-                        <img src={arrowRight} alt="arrow right" />
-                    </div>
-                    <div
-                        className="iconLeft directionIcon"
-                        onClick={this.handleRightArrowClick.bind(this)}
-                    >
-                        <img src={arrowLeft} alt="arrow left" />
-                    </div>
+                <ImageSlide url={imgUrls[this.state.currentImageIndex]} />
+                <div
+                    className="iconRight directionIcon"
+                    onClick={this.nextSlide}
+                >
+                    <img src={arrowRight} alt="arrow right" />
                 </div>
             </div>
         );
