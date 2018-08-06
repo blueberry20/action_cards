@@ -119,4 +119,9 @@ h2 {
 /*new slider*/
 .image-slide {
     height: 500px;
+    transition: ;
+}
+
+#carousel {
+    position: relative;
 }

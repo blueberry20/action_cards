@@ -98,10 +98,10 @@ class Slider extends Component {
         return (
             <div id="carousel">
                 <div
-                    className="iconRight directionIcon"
+                    className="iconLeft directionIcon"
                     onClick={this.previousSlide}
                 >
-                    <img src={arrowRight} alt="arrow right" />
+                    <img src={arrowLeft} alt="arrow right" />
                 </div>
                 <ImageSlide url={imgUrls[this.state.currentImageIndex]} />
                 <div
